@@ -1,0 +1,475 @@
+# FitPulse — Fitness Dashboard Implementation Plan
+
+> This is an **example** implementation plan generated from the AI Implementation Prompt.  
+> It demonstrates the level of detail and format the AI should produce.  
+> Use this as a reference when reviewing AI-generated plans.
+
+---
+
+## Overview
+
+FitPulse is a modern fitness tracking dashboard web application. It provides a visually engaging interface for users to track workouts, monitor progress, and view health metrics. The target audience is fitness enthusiasts who want a premium, data-rich experience without backend complexity. All data is client-side mock data — this is a frontend showcase.
+
+Key differentiators: fluid dark-mode-first UI, animated data visualizations, responsive card-based layout, and a design that feels like a native app rather than a typical web dashboard.
+
+---
+
+## Tech Stack
+
+### Core
+| Package | Version | Command | Reason |
+|---------|---------|---------|--------|
+| Next.js | latest (16.x) | `npx -y create-next-app@latest fitpulse --typescript --tailwind --eslint --app --src-dir --use-npm --yes` | App Router, built-in optimization, server components |
+| React | 19.x | (included) | UI library |
+| TypeScript | 5.x | (included) | Type safety |
+| Tailwind CSS | v4 | (included) | CSS-first utility styling |
+| Framer Motion | latest | `npm install framer-motion` | Declarative animations, scroll-linked motion |
+| Recharts | latest | `npm install recharts` | Lightweight chart library for fitness data |
+
+### What NOT to use
+- **GSAP**: Framer Motion covers all animation needs; adding GSAP doubles the animation bundle
+- **Chart.js**: Recharts integrates better with React and supports responsive SVG charts
+- **Zustand/Redux**: Overkill for this scope — React context + useState is sufficient
+- **CSS Modules**: Tailwind handles everything; modules add unnecessary file overhead
+
+---
+
+## Design System
+
+### Colors
+
+#### Dark Mode (default)
+```css
+:root {
+  /* Backgrounds */
+  --bg-primary: #0b0b12;
+  --bg-secondary: #13131f;
+  --bg-elevated: #1c1c2e;
+  --bg-overlay: rgba(11, 11, 18, 0.8);
+
+  /* Text */
+  --text-primary: #f0f0f5;
+  --text-secondary: #8888a4;
+  --text-muted: #55556a;
+  --text-inverse: #0b0b12;
+
+  /* Accents */
+  --accent-primary: #7c3aed;       /* Violet — primary actions */
+  --accent-secondary: #06b6d4;     /* Cyan — secondary data */
+  --accent-tertiary: #f97316;      /* Orange — tertiary highlights */
+
+  /* Semantic */
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Surfaces */
+  --border-color: rgba(255, 255, 255, 0.06);
+  --glow: rgba(124, 58, 237, 0.15);
+  --glass-bg: rgba(19, 19, 31, 0.7);
+  --glass-blur: 20px;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+```
+
+#### Light Mode
+```css
+[data-theme="light"] {
+  --bg-primary: #f8f8fc;
+  --bg-secondary: #eeeeF6;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(248, 248, 252, 0.8);
+
+  --text-primary: #111128;
+  --text-secondary: #555578;
+  --text-muted: #999ab0;
+  --text-inverse: #f0f0f5;
+
+  --accent-primary: #6d28d9;
+  --accent-secondary: #0891b2;
+  --accent-tertiary: #ea580c;
+
+  --border-color: rgba(0, 0, 0, 0.06);
+  --glow: rgba(109, 40, 217, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+```
+
+### Typography
+| Level | Font | Weight | Size | Line Height | Letter Spacing |
+|-------|------|--------|------|-------------|----------------|
+| h1 | Inter | 800 | 48px / 3rem | 1.1 | -0.02em |
+| h2 | Inter | 700 | 36px / 2.25rem | 1.2 | -0.01em |
+| h3 | Inter | 600 | 24px / 1.5rem | 1.3 | 0 |
+| h4 | Inter | 600 | 18px / 1.125rem | 1.4 | 0 |
+| body | Inter | 400 | 16px / 1rem | 1.6 | 0 |
+| body-sm | Inter | 400 | 14px / 0.875rem | 1.5 | 0 |
+| caption | Inter | 500 | 12px / 0.75rem | 1.4 | 0.05em |
+| mono | JetBrains Mono | 400 | 14px / 0.875rem | 1.5 | 0 |
+
+Google Fonts import:
+```typescript
+import { Inter, JetBrains_Mono } from 'next/font/google';
+const inter = Inter({ variable: '--font-inter', subsets: ['latin'], display: 'swap' });
+const jetbrains = JetBrains_Mono({ variable: '--font-jetbrains', subsets: ['latin'], display: 'swap' });
+```
+
+### Spacing & Layout
+| Breakpoint | Container Max-Width | Section Padding |
+|------------|-------------------|-----------------|
+| Mobile (<640px) | 100% - 32px | 48px 16px |
+| Tablet (640-1024px) | 100% - 48px | 64px 24px |
+| Desktop (1024px+) | 1200px | 80px 32px |
+
+Border radius scale: `sm: 8px`, `md: 12px`, `lg: 16px`, `xl: 20px`, `2xl: 24px`, `full: 9999px`
+
+### Animation Tokens
+```css
+/* Easing */
+--ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);    /* General transitions */
+--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* Playful interactions */
+--ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);    /* Symmetric motion */
+
+/* Duration */
+--dur-fast: 150ms;     /* Hover states, toggles */
+--dur-medium: 300ms;   /* Element reveals */
+--dur-slow: 600ms;     /* Section transitions */
+--dur-very-slow: 1000ms; /* Hero animations */
+```
+
+Framer Motion spring configs:
+```typescript
+const SPRINGS = {
+  snappy: { type: 'spring' as const, stiffness: 400, damping: 25 },
+  smooth: { type: 'spring' as const, stiffness: 200, damping: 20 },
+  bouncy: { type: 'spring' as const, stiffness: 300, damping: 15 },
+};
+```
+
+---
+
+## Folder Structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx              # Root layout — fonts, ThemeProvider, Sidebar, metadata
+│   ├── page.tsx                # Dashboard home — stats, charts, recent activity
+│   ├── globals.css             # Design system tokens, keyframes, utilities
+│   ├── workouts/
+│   │   └── page.tsx            # Workout log — list of past workouts
+│   ├── progress/
+│   │   └── page.tsx            # Progress — charts, trends, body metrics
+│   └── settings/
+│       └── page.tsx            # Settings — profile, preferences, theme
+├── components/
+│   ├── layout/
+│   │   ├── Sidebar.tsx         # Left sidebar navigation (collapsible)
+│   │   ├── TopBar.tsx          # Top bar with search, notifications, profile
+│   │   └── MobileNav.tsx       # Bottom tab bar for mobile
+│   ├── ui/
+│   │   ├── Card.tsx            # Reusable card with hover glow
+│   │   ├── Button.tsx          # Animated button (primary, secondary, ghost)
+│   │   ├── Badge.tsx           # Status/category badge
+│   │   ├── ProgressRing.tsx    # Circular progress indicator (SVG)
+│   │   ├── AnimatedSection.tsx # Scroll-triggered reveal wrapper
+│   │   └── ThemeToggle.tsx     # Sun/moon toggle
+│   ├── dashboard/
+│   │   ├── StatCard.tsx        # Metric card (value, label, trend arrow)
+│   │   ├── ActivityChart.tsx   # Weekly activity bar chart (Recharts)
+│   │   ├── CalorieRing.tsx     # Daily calorie goal ring
+│   │   ├── RecentWorkouts.tsx  # List of 5 recent workouts
+│   │   └── WeeklyGoal.tsx      # Weekly goal progress bar
+│   ├── workouts/
+│   │   ├── WorkoutCard.tsx     # Single workout entry card
+│   │   └── WorkoutFilters.tsx  # Filter pills (type, date range)
+│   ├── progress/
+│   │   ├── WeightChart.tsx     # Weight trend line chart
+│   │   ├── PRTable.tsx         # Personal records table
+│   │   └── BodyMetrics.tsx     # Body measurement cards
+│   └── effects/
+│       ├── FloatingOrbs.tsx    # Ambient gradient orbs
+│       └── GridPattern.tsx     # Subtle dot grid background
+├── hooks/
+│   └── useTheme.ts             # (re-export from provider for convenience)
+├── lib/
+│   ├── constants.ts            # Nav items, categories
+│   ├── mockData.ts             # All fake fitness data
+│   └── utils.ts                # Formatters (date, number, duration)
+└── providers/
+    └── ThemeProvider.tsx        # Dark/light context with localStorage
+```
+
+---
+
+## Components
+
+### Layout
+
+#### [NEW] Sidebar.tsx
+**Purpose**: Fixed left sidebar with navigation links, logo, and collapse toggle.  
+**Props**: None (reads route from `usePathname`)  
+**State**: `collapsed: boolean` (persisted to localStorage)  
+**Animations**: Width animates between 240px (expanded) and 72px (collapsed) via Framer Motion `animate`. Nav labels fade out when collapsed.  
+**Styling**: `bg-[var(--bg-secondary)]`, `border-r border-[var(--border-color)]`, full viewport height. Active link has `bg-[var(--accent-primary)]/10` + `text-[var(--accent-primary)]` + left 3px accent bar.  
+**Children**: Logo, 4 nav links (Dashboard, Workouts, Progress, Settings), collapse button at bottom.  
+**Interactions**: Hover on links shows background. Click navigates via Next.js `Link`. Collapse button rotates chevron icon.  
+**Accessibility**: `<nav>` landmark, `aria-current="page"` on active link.  
+**Edge cases**: On mobile (<768px), sidebar is hidden — MobileNav shown instead.
+
+#### [NEW] TopBar.tsx
+**Purpose**: Horizontal top bar with page title, search input, notification bell, profile avatar.  
+**Props**: `title: string` (current page name)  
+**State**: None  
+**Animations**: None (static bar)  
+**Styling**: `h-16`, `glass` background, `border-b`, sticky top.  
+**Interactions**: Search input is visual-only (no functionality). Notification bell has a red dot badge (hardcoded count).
+
+#### [NEW] MobileNav.tsx
+**Purpose**: Bottom tab bar visible only on mobile (<768px).  
+**Props**: None  
+**Styling**: Fixed bottom, 4 equal tabs, `glass` background, `border-t`. Active tab has accent color icon.  
+**Interactions**: Tap navigates. Active tab icon scales slightly.
+
+### UI Primitives
+
+#### [NEW] Card.tsx
+**Purpose**: Reusable card container with subtle hover glow effect.  
+**Props**: `children: ReactNode`, `className?: string`, `hoverable?: boolean` (default true)  
+**Animations**: On hover: `y: -3`, subtle glow border appears (via `box-shadow: 0 0 20px var(--glow)`). Transition: 300ms ease.  
+**Styling**: `rounded-2xl`, `bg-[var(--bg-secondary)]`, `border border-[var(--border-color)]`, `p-6`.
+
+#### [NEW] ProgressRing.tsx
+**Purpose**: Circular SVG progress ring for displaying completion percentage.  
+**Props**: `value: number` (0-100), `size?: number` (default 120), `strokeWidth?: number` (default 8), `color?: string` (default accent-primary)  
+**Animations**: On mount or when `value` changes, the stroke-dashoffset animates from 0% to target via Framer Motion `animate`. Duration: 1s, ease: smooth.  
+**Styling**: SVG with background circle (`var(--border-color)`) and foreground circle (gradient or solid color). Center text shows `{value}%`.
+
+### Dashboard Components
+
+#### [NEW] StatCard.tsx
+**Purpose**: Displays a single metric (e.g., "Calories Burned: 2,340").  
+**Props**: `label: string`, `value: string`, `change?: string`, `changeType?: 'positive' | 'negative' | 'neutral'`, `icon: ReactNode`  
+**Animations**: Scroll-triggered fade-up (via AnimatedSection wrapper). Number value counts up on first view (Framer Motion `useMotionValue` + `useTransform` + `animate`). Duration: 1.5s.  
+**Styling**: Card with icon top-left (40x40 rounded-xl, accent bg with 10% opacity), value large bold, label caption-size muted, change indicator bottom-right with arrow + color.
+
+#### [NEW] ActivityChart.tsx
+**Purpose**: Bar chart showing daily activity for the current week (Mon–Sun).  
+**Props**: None (reads from mockData)  
+**Animations**: Bars grow from bottom on scroll entry. Stagger: 80ms per bar.  
+**Styling**: Card wrapper. Recharts `BarChart` with custom bar shape (rounded top), accent-primary fill, grid lines at 20% opacity. Tooltip on hover.  
+**Responsive**: Full width, height 250px on desktop, 200px on mobile.
+
+---
+
+## Pages
+
+### / (Dashboard Home)
+**Route**: `/`  
+**SEO**: `title: "FitPulse — Dashboard"`, `description: "Track your fitness journey with FitPulse"`  
+**Layout**:
+- Sidebar (left, desktop only)
+- TopBar (title: "Dashboard")
+- Content area:
+  - Row 1: 4 StatCards (Calories, Steps, Active Minutes, Workouts This Week)
+  - Row 2: ActivityChart (2/3 width) + CalorieRing (1/3 width)
+  - Row 3: RecentWorkouts (2/3 width) + WeeklyGoal (1/3 width)
+- MobileNav (bottom, mobile only)
+
+**Responsive**:
+- Desktop: Sidebar 240px + content fluid
+- Tablet: Sidebar collapsed (72px) + content fluid
+- Mobile: No sidebar, full width, MobileNav at bottom. Stat cards 2-column grid. Charts stack vertically.
+
+**Scroll behavior**: Smooth scroll. Each row reveals with staggered AnimatedSection (delay 0, 0.1, 0.2).
+
+### /workouts
+**Route**: `/workouts`  
+**SEO**: `title: "FitPulse — Workouts"`, `description: "View your workout history"`  
+**Layout**:
+- TopBar (title: "Workouts")
+- WorkoutFilters (pill buttons: All, Strength, Cardio, Flexibility, HIIT)
+- Grid of WorkoutCards (2 columns desktop, 1 column mobile)
+- 8 workout entries from mock data
+
+### /progress
+**Route**: `/progress`  
+**SEO**: `title: "FitPulse — Progress"`, `description: "Track your fitness progress"`  
+**Layout**:
+- TopBar (title: "Progress")
+- WeightChart (full width line chart, 6 months of data)
+- Row: BodyMetrics (3 cards: Weight, Body Fat %, Muscle Mass)
+- PRTable (personal records table: Exercise, Weight, Date)
+
+### /settings
+**Route**: `/settings`  
+**SEO**: `title: "FitPulse — Settings"`  
+**Layout**:
+- TopBar (title: "Settings")
+- Profile card (avatar, name, email — all mock)
+- Preferences card (ThemeToggle, unit system toggle kg/lbs)
+- About card (version, links)
+
+---
+
+## Animation System
+
+| Element | Technique | Trigger | Duration | Easing |
+|---------|-----------|---------|----------|--------|
+| Background orbs | CSS `@keyframes float` | Always | 20s loop | ease-in-out |
+| Grid pattern | CSS static | Always | N/A | N/A |
+| Section reveals | Framer Motion `useInView` | Scroll (once) | 600ms | `--ease-smooth` |
+| Stat card numbers | Framer Motion `animate` | In view (once) | 1500ms | `--ease-smooth` |
+| Chart bars | Framer Motion stagger | In view (once) | 400ms each, 80ms stagger | `--ease-smooth` |
+| Progress ring | Framer Motion `animate` | In view (once) | 1000ms | `--ease-smooth` |
+| Card hover | CSS `transition` | Mouse hover | 200ms | ease |
+| Button hover | Framer Motion `whileHover` | Mouse hover | Spring (snappy) | spring |
+| Sidebar collapse | Framer Motion `animate` | Click toggle | 300ms | `--ease-smooth` |
+| Theme transition | CSS `transition` on body | Toggle click | 400ms | ease |
+| Page title | Framer Motion fade-in | Route change | 300ms | `--ease-smooth` |
+
+**Performance rules**:
+- Background orbs: CSS `@keyframes` only — GPU composited via `transform` + `opacity`, zero JS
+- Chart animations: Trigger once with `useInView({ once: true })` — never re-animate on scroll back
+- Hover effects: Pure CSS `transition` where possible — Framer Motion only for spring physics
+- Never animate `width`, `height`, `top`, `left` — only `transform` and `opacity`
+
+---
+
+## Mock Data
+
+```typescript
+// lib/mockData.ts
+
+export interface DailyActivity {
+  day: 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
+  calories: number;
+  steps: number;
+  activeMinutes: number;
+}
+
+export const WEEKLY_ACTIVITY: DailyActivity[] = [
+  { day: 'Mon', calories: 2340, steps: 8234, activeMinutes: 45 },
+  { day: 'Tue', calories: 1890, steps: 6102, activeMinutes: 30 },
+  { day: 'Wed', calories: 2670, steps: 10455, activeMinutes: 62 },
+  { day: 'Thu', calories: 2100, steps: 7800, activeMinutes: 38 },
+  { day: 'Fri', calories: 2450, steps: 9100, activeMinutes: 55 },
+  { day: 'Sat', calories: 3100, steps: 12300, activeMinutes: 78 },
+  { day: 'Sun', calories: 1600, steps: 4200, activeMinutes: 20 },
+];
+
+export interface Workout {
+  id: number;
+  name: string;
+  type: 'Strength' | 'Cardio' | 'Flexibility' | 'HIIT';
+  duration: number; // minutes
+  calories: number;
+  date: string; // ISO date
+  exercises: number;
+}
+
+export const WORKOUTS: Workout[] = [
+  { id: 1, name: 'Upper Body Power', type: 'Strength', duration: 55, calories: 420, date: '2025-04-22', exercises: 6 },
+  { id: 2, name: 'Morning Run', type: 'Cardio', duration: 35, calories: 380, date: '2025-04-21', exercises: 1 },
+  { id: 3, name: 'HIIT Circuit', type: 'HIIT', duration: 25, calories: 310, date: '2025-04-20', exercises: 8 },
+  { id: 4, name: 'Yoga Flow', type: 'Flexibility', duration: 40, calories: 150, date: '2025-04-19', exercises: 12 },
+  { id: 5, name: 'Leg Day', type: 'Strength', duration: 60, calories: 480, date: '2025-04-18', exercises: 7 },
+  { id: 6, name: 'Sprint Intervals', type: 'Cardio', duration: 20, calories: 290, date: '2025-04-17', exercises: 1 },
+  { id: 7, name: 'Full Body Strength', type: 'Strength', duration: 50, calories: 440, date: '2025-04-16', exercises: 8 },
+  { id: 8, name: 'Stretch & Recover', type: 'Flexibility', duration: 30, calories: 100, date: '2025-04-15', exercises: 10 },
+];
+
+export interface WeightEntry {
+  date: string;
+  weight: number; // kg
+}
+
+export const WEIGHT_HISTORY: WeightEntry[] = [
+  { date: '2024-11', weight: 82.5 },
+  { date: '2024-12', weight: 81.8 },
+  { date: '2025-01', weight: 80.2 },
+  { date: '2025-02', weight: 79.5 },
+  { date: '2025-03', weight: 78.8 },
+  { date: '2025-04', weight: 77.3 },
+];
+
+export interface PersonalRecord {
+  exercise: string;
+  weight: string;
+  date: string;
+}
+
+export const PERSONAL_RECORDS: PersonalRecord[] = [
+  { exercise: 'Bench Press', weight: '100 kg', date: '2025-04-10' },
+  { exercise: 'Squat', weight: '140 kg', date: '2025-04-05' },
+  { exercise: 'Deadlift', weight: '180 kg', date: '2025-03-28' },
+  { exercise: 'Overhead Press', weight: '65 kg', date: '2025-04-15' },
+  { exercise: 'Pull-ups', weight: 'BW + 25 kg', date: '2025-04-20' },
+];
+```
+
+---
+
+## Implementation Order
+
+| Step | Task | Dependencies | Files |
+|------|------|-------------|-------|
+| 1 | Scaffold project | None | CLI + `npm install framer-motion recharts` |
+| 2 | Design system | Step 1 | `globals.css` |
+| 3 | Theme provider | Step 2 | `providers/ThemeProvider.tsx` |
+| 4 | Root layout | Steps 2-3 | `app/layout.tsx` |
+| 5 | Mock data + constants | None | `lib/mockData.ts`, `lib/constants.ts`, `lib/utils.ts` |
+| 6 | UI primitives | Step 2 | `components/ui/*` |
+| 7 | Background effects | Step 2 | `components/effects/*` |
+| 8 | Layout components | Steps 4,6 | `Sidebar.tsx`, `TopBar.tsx`, `MobileNav.tsx` |
+| 9 | Dashboard components | Steps 5,6 | `components/dashboard/*` |
+| 10 | Dashboard page | Steps 8,9 | `app/page.tsx` |
+| 11 | Workouts components + page | Steps 5,6 | `components/workouts/*`, `app/workouts/page.tsx` |
+| 12 | Progress components + page | Steps 5,6 | `components/progress/*`, `app/progress/page.tsx` |
+| 13 | Settings page | Steps 6,3 | `app/settings/page.tsx` |
+| 14 | Polish + verify | All | Build, lint, visual test |
+
+---
+
+## Verification Plan
+
+### Automated
+```bash
+npm run build    # Expect: 0 errors, all routes statically generated
+npm run lint     # Expect: 0 warnings
+```
+
+### Visual Checks
+- [ ] Dashboard loads with stat card number count-up animation
+- [ ] Activity chart bars animate in on scroll
+- [ ] Calorie ring animates to target percentage
+- [ ] Sidebar collapses/expands smoothly
+- [ ] Theme toggle switches colors with smooth transition
+- [ ] All 4 routes navigable via sidebar
+- [ ] Mobile layout: no sidebar, bottom nav visible, cards stack vertically
+- [ ] Hover effects work on all cards and buttons
+- [ ] No layout shifts during animation
+- [ ] Scrollbar styled to match theme
+
+### Edge Cases
+- [ ] Theme persists after page reload (localStorage)
+- [ ] Sidebar collapse state persists after navigation
+- [ ] Chart tooltips don't overflow viewport on mobile
+- [ ] Very long workout names truncate with ellipsis
+
+---
+
+## Known Pitfalls
+
+| Issue | Fix |
+|-------|-----|
+| Framer Motion `ease` array type error | Use `as const`: `ease: [0.16, 1, 0.3, 1] as const` |
+| Framer Motion `type` string type error | Use `as const`: `type: 'spring' as const` |
+| `useTheme` crashes during SSR prerender | Give `ThemeContext` a default value, never `undefined` |
+| `border-radius` flickers with Framer Motion 3D transforms | Put `overflow: hidden` + `border-radius` on a parent div, animate the child |
+| Recharts SSR hydration mismatch | Wrap charts in a client component with `'use client'` directive |
+| Recharts `ResponsiveContainer` renders 0 height | Always set explicit `height` prop or wrapper min-height |
+| Next.js 16 `metadata` export type | Import `Metadata` from `next` — don't use old `Head` component |
+| Tailwind v4 config | No `tailwind.config.ts` needed — use CSS `@theme` blocks |
