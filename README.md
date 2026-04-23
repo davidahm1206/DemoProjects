@@ -23,15 +23,19 @@ Every hover effect, every scroll reveal, every gradient was a deliberate choice.
 ## What's Inside
 
 ### Main Portfolio
+
 The landing experience — animated text reveal, interactive skill cards with progress bars, 3D-tilt project cards with mouse-tracking glow, and smooth scroll-driven storytelling.
 
 ### NovaSpark `/demo/startup`
+
 A conversion-optimized SaaS landing page. Hero with live stats, feature grid, three-tier pricing table, and customer testimonials.
 
 ### Luxe Market `/demo/shop`
+
 An elegant e-commerce frontend with filterable product grid, category pills, hover-reveal quick-view overlays, and product badges.
 
 ### TradePulse `/demo/trading`
+
 A dark fintech trading dashboard with collapsible sidebar, SVG portfolio chart, real-time watchlist, and transaction history.
 
 ## Highlights
@@ -45,13 +49,13 @@ A dark fintech trading dashboard with collapsible sidebar, SVG portfolio chart, 
 
 ## Built With
 
-| Technology | Role |
-|-----------|------|
-| **Next.js 16** | Framework (App Router, SSR/SSG) |
-| **React 19** | UI components |
-| **TypeScript** | Type safety across the entire codebase |
-| **Tailwind CSS v4** | Design system and styling |
-| **Framer Motion** | Animations and scroll interactions |
+| Technology          | Role                                   |
+| ------------------- | -------------------------------------- |
+| **Next.js 16**      | Framework (App Router, SSR/SSG)        |
+| **React 19**        | UI components                          |
+| **TypeScript**      | Type safety across the entire codebase |
+| **Tailwind CSS v4** | Design system and styling              |
+| **Framer Motion**   | Animations and scroll interactions     |
 
 No backend. No database. No external APIs. Pure frontend craft.
 
