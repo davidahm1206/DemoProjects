@@ -1,4 +1,4 @@
-# Dav — Portfolio
+# David — Portfolio
 
 A modern, animated portfolio website built with care. Not a template — every animation, transition, and color decision was intentional.
 
