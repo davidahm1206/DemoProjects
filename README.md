@@ -1,105 +1,75 @@
-# Dav — Portfolio
+<div align="center">
 
-A modern, animated portfolio website built with care. Not a template — every animation, transition, and color decision was intentional.
+# David — Portfolio
+
+**A modern, animated developer portfolio built with intention.**
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-latest-bb4de8?style=flat-square&logo=framer&logoColor=white)
+
+</div>
+
+---
+
+## About
+
+This isn't a template or a tutorial project. It's a handcrafted portfolio designed to showcase what modern frontend development looks and feels like — fluid animations, intentional color, and interfaces that react to you.
+
+Every hover effect, every scroll reveal, every gradient was a deliberate choice.
 
 ## What's Inside
 
-- **Main Portfolio** — Hero with animated text reveal, about section, interactive skills, 3D project cards, and contact
-- **NovaSpark** (`/demo/startup`) — SaaS landing page with pricing, features, and testimonials
-- **Luxe Market** (`/demo/shop`) — E-commerce frontend with product grid and category filters
-- **TradePulse** (`/demo/trading`) — Fintech trading dashboard with charts, watchlist, and portfolio analytics
+### Main Portfolio
+The landing experience — animated text reveal, interactive skill cards with progress bars, 3D-tilt project cards with mouse-tracking glow, and smooth scroll-driven storytelling.
 
-## Tech Stack
+### NovaSpark `/demo/startup`
+A conversion-optimized SaaS landing page. Hero with live stats, feature grid, three-tier pricing table, and customer testimonials.
 
-- [Next.js 15](https://nextjs.org/) (App Router)
-- [React 19](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS v4](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
+### Luxe Market `/demo/shop`
+An elegant e-commerce frontend with filterable product grid, category pills, hover-reveal quick-view overlays, and product badges.
 
-No backend. All data is mock.
+### TradePulse `/demo/trading`
+A dark fintech trading dashboard with collapsible sidebar, SVG portfolio chart, real-time watchlist, and transaction history.
 
-## Getting Started
+## Highlights
 
-```bash
-npm install
-npm run dev
-```
+- 🌗 Dark and light themes with smooth animated transitions
+- 🎬 Scroll-triggered section reveals and staggered animations
+- 🃏 3D perspective project cards with mouse-tracking spotlight
+- 🔮 Glassmorphism navbar with scroll-aware hide/show
+- ✨ Floating ambient gradient orbs and subtle grid patterns
+- 📱 Fully responsive from mobile to ultrawide
 
-Open [http://localhost:3000](http://localhost:3000).
+## Built With
 
-## Features
+| Technology | Role |
+|-----------|------|
+| **Next.js 16** | Framework (App Router, SSR/SSG) |
+| **React 19** | UI components |
+| **TypeScript** | Type safety across the entire codebase |
+| **Tailwind CSS v4** | Design system and styling |
+| **Framer Motion** | Animations and scroll interactions |
 
-- Dark / light mode with smooth transitions
-- Scroll-triggered section reveals
-- 3D tilt project cards with mouse-tracking glow
-- Glassmorphism navbar that hides on scroll down
-- Floating ambient background orbs
-- Subtle dot grid pattern
-- Responsive across all screen sizes
-- Clean, maintainable component architecture
+No backend. No database. No external APIs. Pure frontend craft.
 
-## Deployment
-
-### Cloudflare Pages
-
-1. Push your code to a GitHub repository
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
-3. Connect your GitHub repo
-4. Set build settings:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `.next`
-   - **Framework preset**: Next.js
-5. Deploy
-
-### Vercel (Recommended)
-
-```bash
-npx vercel
-```
-
-### Static Export (GitHub Pages)
-
-Add to `next.config.ts`:
-
-```ts
-const nextConfig = {
-  output: 'export',
-};
-```
-
-Then:
-
-```bash
-npm run build
-```
-
-The `out/` directory contains the static site. Deploy it to GitHub Pages or any static host.
-
-Note: Static export doesn't support some Next.js features (middleware, ISR). For this portfolio, it works fine.
-
-## Project Structure
+## Structure
 
 ```
-src/
-├── app/
-│   ├── layout.tsx           # Root layout
-│   ├── page.tsx             # Main portfolio
-│   ├── globals.css          # Design system
-│   └── demo/
-│       ├── startup/page.tsx # SaaS demo
-│       ├── shop/page.tsx    # E-commerce demo
-│       └── trading/page.tsx # Dashboard demo
-├── components/
-│   ├── layout/              # Navbar, Footer
-│   ├── ui/                  # Button, AnimatedSection, ThemeToggle
-│   ├── effects/             # FloatingOrbs, GridBackground, ParallaxLayer
-│   └── sections/            # Hero, About, Skills, Projects, CTA, Contact
-├── hooks/                   # useScrollProgress
-├── lib/                     # constants, mockData
-└── providers/               # ThemeProvider
+portfolio/src/
+├── app/           → Pages and routing
+├── components/    → UI, layout, sections, effects
+├── hooks/         → Custom React hooks
+├── lib/           → Constants and mock data
+└── providers/     → Theme context
 ```
 
-## License
+---
 
-MIT
+<div align="center">
+
+Made by [David](https://github.com/davidahm1206)
+
+</div>

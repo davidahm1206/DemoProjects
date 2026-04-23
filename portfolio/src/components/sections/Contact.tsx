@@ -37,7 +37,7 @@ export default function Contact() {
 
         <AnimatedSection delay={0.1}>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
-            Say <span className="gradient-text">hello</span>
+            Reach <span className="gradient-text">Out</span>
           </h2>
         </AnimatedSection>
 
