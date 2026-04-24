@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import Link from 'next/link';
 
 interface ButtonProps {
@@ -9,7 +9,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   type?: 'button' | 'submit';
 }
