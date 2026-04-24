@@ -12,6 +12,7 @@ interface ButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   type?: 'button' | 'submit';
+  form?: string;
 }
 
 const variants = {
@@ -39,6 +40,7 @@ export default function Button({
   onClick,
   className = '',
   type = 'button',
+  form,
 }: ButtonProps) {
   const baseClasses = `inline-flex items-center justify-center gap-2 font-medium transition-all duration-300 cursor-pointer ${variants[variant]} ${sizes[size]} ${className}`;
 
@@ -63,6 +65,7 @@ export default function Button({
       {...motionProps}
       onClick={onClick}
       type={type}
+      form={form}
       className={baseClasses}
     >
       {children}
