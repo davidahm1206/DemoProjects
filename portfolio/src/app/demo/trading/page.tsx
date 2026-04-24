@@ -11,7 +11,7 @@ import {
   TRADING_SIDEBAR_ITEMS,
 } from '@/lib/mockData';
 
-function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen }: { collapsed: boolean; onToggle: () => void; mobileOpen: boolean; setMobileOpen: (open: boolean) => void }) {
+function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen, onItemClick }: { collapsed: boolean; onToggle: () => void; mobileOpen: boolean; setMobileOpen: (open: boolean) => void; onItemClick: (label: string) => void }) {
   // We handle mobile open/close via classes and framer motion
   return (
     <>
@@ -23,7 +23,7 @@ function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen }: { collapsed
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 z-[60] md:hidden backdrop-blur-sm"
           />
         )}
       </AnimatePresence>
@@ -35,7 +35,7 @@ function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen }: { collapsed
           x: typeof window !== 'undefined' && window.innerWidth < 768 ? (mobileOpen ? 0 : -240) : 0
         }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed left-0 top-0 h-screen bg-[var(--bg-secondary)] border-r border-[var(--border-color)] z-50 flex flex-col pt-6 overflow-hidden max-md:w-[240px]"
+        className="fixed left-0 top-0 h-screen bg-[var(--bg-secondary)] border-r border-[var(--border-color)] z-[70] flex flex-col pt-6 overflow-hidden max-md:w-[240px]"
       >
         {/* Logo */}
         <div className="px-4 mb-8 flex items-center justify-between">
@@ -53,10 +53,6 @@ function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen }: { collapsed
               </motion.span>
             )}
           </div>
-          {/* Close button for mobile */}
-          <button onClick={() => setMobileOpen(false)} className="md:hidden text-[var(--text-secondary)] hover:text-white">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
         </div>
 
         {/* Nav items */}
@@ -65,7 +61,7 @@ function Sidebar({ collapsed, onToggle, mobileOpen, setMobileOpen }: { collapsed
             <button
               key={item.label}
               onClick={() => {
-                // mock interaction
+                onItemClick(item.label);
                 if (typeof window !== 'undefined' && window.innerWidth < 768) {
                   setMobileOpen(false);
                 }
@@ -177,7 +173,7 @@ export default function TradingPage() {
 
   return (
     <div className="min-h-screen">
-      <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} mobileOpen={mobileSidebarOpen} setMobileOpen={setMobileSidebarOpen} />
+      <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} mobileOpen={mobileSidebarOpen} setMobileOpen={setMobileSidebarOpen} onItemClick={(label) => showToast(`Navigated to ${label}`, 'info')} />
 
       {/* Toast Notification */}
       <AnimatePresence>

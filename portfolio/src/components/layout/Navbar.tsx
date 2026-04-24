@@ -87,7 +87,7 @@ export default function Navbar() {
             aria-label="Toggle menu"
           >
             <motion.span
-              animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 6 : 0 }}
+              animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 8 : 0 }}
               className="w-4 h-0.5 bg-[var(--text-primary)] block transition-colors"
             />
             <motion.span
@@ -95,7 +95,7 @@ export default function Navbar() {
               className="w-4 h-0.5 bg-[var(--text-primary)] block transition-colors"
             />
             <motion.span
-              animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -6 : 0 }}
+              animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -8 : 0 }}
               className="w-4 h-0.5 bg-[var(--text-primary)] block transition-colors"
             />
           </button>
@@ -110,7 +110,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden glass border-t border-[var(--border-color)] overflow-hidden"
+            className="md:hidden bg-[var(--bg-primary)] border-t border-[var(--border-color)] overflow-hidden shadow-xl"
           >
             <div className="px-4 py-4 flex flex-col gap-1">
               {isHome &&
