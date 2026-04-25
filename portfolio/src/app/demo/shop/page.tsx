@@ -236,7 +236,7 @@ export default function ShopPage() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-[var(--bg-secondary)] border-l border-[var(--border-color)] z-50 flex flex-col shadow-2xl"
+              className="fixed right-0 top-0 bottom-0 w-[85vw] sm:w-[400px] bg-[var(--bg-secondary)] border-l border-[var(--border-color)] z-50 flex flex-col shadow-2xl"
             >
               <div className="p-6 border-b border-[var(--border-color)] flex items-center justify-between">
                 <h2 className="text-xl font-bold">Your Cart</h2>

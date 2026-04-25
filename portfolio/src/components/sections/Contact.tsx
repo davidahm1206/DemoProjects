@@ -43,7 +43,7 @@ export default function Contact() {
 
         <AnimatedSection delay={0.2}>
           <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-xl mx-auto">
-            Got a project in mind? Reach out through any of these channels.
+            Got a project in mind?<br></br>Reach out to me on Reddit.
           </p>
         </AnimatedSection>
 

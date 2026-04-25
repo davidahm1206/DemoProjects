@@ -26,8 +26,7 @@ export default function CTA() {
 
         <AnimatedSection delay={0.15}>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-xl mx-auto leading-relaxed">
-            I&apos;m always interested in new opportunities, collaborations, and conversations
-            about building great things for the web.
+            I&apos;m always interested in new opportunities.
           </p>
         </AnimatedSection>
 
