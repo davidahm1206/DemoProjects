@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { ReactNode, MouseEvent } from 'react';
 import Link from 'next/link';
 
@@ -17,19 +16,19 @@ interface ButtonProps {
 
 const variants = {
   primary:
-    'bg-[var(--accent-1)] text-white hover:shadow-[0_0_30px_var(--glow)] border border-transparent',
+    'bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-90 border border-transparent',
   secondary:
-    'bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--accent-1)]/10 border border-[var(--border-color)]',
+    'bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]/80 border border-[var(--border-color)]',
   ghost:
     'bg-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-transparent',
   outline:
-    'bg-transparent text-[var(--accent-1)] border border-[var(--accent-1)] hover:bg-[var(--accent-1)]/10',
+    'bg-transparent text-[var(--text-primary)] border border-[var(--border-color)] hover:bg-[var(--bg-elevated)]',
 };
 
 const sizes = {
-  sm: 'px-4 py-2 text-sm rounded-lg',
-  md: 'px-6 py-3 text-base rounded-xl',
-  lg: 'px-8 py-4 text-lg rounded-xl',
+  sm: 'px-3 py-1.5 text-sm rounded-md',
+  md: 'px-4 py-2 text-sm rounded-md',
+  lg: 'px-6 py-3 text-base rounded-md',
 };
 
 export default function Button({
@@ -42,33 +41,24 @@ export default function Button({
   type = 'button',
   form,
 }: ButtonProps) {
-  const baseClasses = `inline-flex items-center justify-center gap-2 font-medium transition-all duration-300 cursor-pointer ${variants[variant]} ${sizes[size]} ${className}`;
-
-  const motionProps = {
-    whileHover: { scale: 1.03 },
-    whileTap: { scale: 0.97 },
-    transition: { type: 'spring' as const, stiffness: 400, damping: 17 },
-  };
+  const baseClasses = `inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 active:scale-[0.98] ${variants[variant]} ${sizes[size]} ${className}`;
 
   if (href) {
     return (
-      <motion.div {...motionProps} className="inline-block">
-        <Link href={href} className={baseClasses}>
-          {children}
-        </Link>
-      </motion.div>
+      <Link href={href} className={baseClasses}>
+        {children}
+      </Link>
     );
   }
 
   return (
-    <motion.button
-      {...motionProps}
+    <button
       onClick={onClick}
       type={type}
       form={form}
       className={baseClasses}
     >
       {children}
-    </motion.button>
+    </button>
   );
 }

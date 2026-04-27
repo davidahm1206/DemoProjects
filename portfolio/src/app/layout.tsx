@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import Navbar from '@/components/layout/Navbar';
-import FloatingOrbs from '@/components/effects/FloatingOrbs';
-import GridBackground from '@/components/effects/GridBackground';
+
 import './globals.css';
 
 const inter = Inter({
@@ -38,8 +37,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <ThemeProvider>
-          <FloatingOrbs />
-          <GridBackground />
+
           <Navbar />
           <main className="relative z-10">{children}</main>
         </ThemeProvider>

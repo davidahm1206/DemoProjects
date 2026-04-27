@@ -36,20 +36,17 @@ export default function Navbar() {
       animate={{ y: hidden ? -100 : 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass shadow-lg !border-x-0 !border-t-0' : 'border-b border-transparent'
+        scrolled ? 'bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border-color)]' : 'border-b border-transparent'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <motion.div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, var(--accent-1), var(--accent-2))' }}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          <div
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold bg-[var(--text-primary)] text-[var(--bg-primary)]"
           >
             D
-          </motion.div>
+          </div>
           <span className="text-lg font-semibold text-[var(--text-primary)] hidden sm:block">
             {SITE.name}
           </span>

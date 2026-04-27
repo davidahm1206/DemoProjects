@@ -14,7 +14,7 @@ export default function Footer() {
             href={SITE.socials.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--accent-1)] transition-colors duration-200"
+            className="hover:text-[var(--text-primary)] transition-colors duration-200"
           >
             GitHub
           </a>
@@ -22,7 +22,7 @@ export default function Footer() {
             href={SITE.socials.reddit}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--accent-1)] transition-colors duration-200"
+            className="hover:text-[var(--text-primary)] transition-colors duration-200"
           >
             Reddit
           </a>
