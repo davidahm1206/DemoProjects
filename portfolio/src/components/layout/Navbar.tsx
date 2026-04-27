@@ -43,7 +43,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold bg-[var(--text-primary)] text-[var(--bg-primary)]"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold bg-[var(--text-primary)] text-[var(--bg-primary)] group-hover:scale-105 group-active:scale-95 transition-transform duration-200"
           >
             D
           </div>
@@ -53,23 +53,23 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-6">
           {isHome &&
             NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+                className="relative text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
               >
-                {item.label}
+                <span className="link-underline pb-0.5">{item.label}</span>
               </Link>
             ))}
           {!isHome && (
             <Link
               href="/"
-              className="px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
             >
-              ← Back to Portfolio
+              <span className="link-underline pb-0.5">← Back to Portfolio</span>
             </Link>
           )}
         </div>

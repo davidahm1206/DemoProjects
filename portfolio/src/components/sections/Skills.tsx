@@ -16,8 +16,10 @@ export default function Skills() {
         <AnimatedSection>
           <div className="flex flex-wrap gap-x-8 gap-y-4 text-[var(--text-secondary)]">
             {SKILLS.map((skill) => (
-              <div key={skill.name} className="flex items-center gap-2">
-                <span className="text-sm font-medium">{skill.name}</span>
+              <div key={skill.name} className="flex items-center gap-2 group cursor-default">
+                <span className="text-sm font-medium transition-transform duration-200 group-hover:scale-105 group-hover:text-[var(--text-primary)] inline-block">
+                  {skill.name}
+                </span>
               </div>
             ))}
           </div>

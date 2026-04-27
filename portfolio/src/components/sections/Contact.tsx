@@ -26,17 +26,17 @@ export default function Contact() {
                 href={SITE.socials.reddit}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-base text-[var(--text-primary)] hover:underline underline-offset-4 decoration-[var(--border-color)] hover:decoration-[var(--text-primary)] transition-all inline-block w-max"
+                className="text-base text-[var(--text-primary)] transition-all inline-block w-max"
               >
-                Reach out on Reddit ↗
+                <span className="link-underline pb-0.5">Reach out on Reddit ↗</span>
               </a>
               <a
                 href={SITE.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-base text-[var(--text-primary)] hover:underline underline-offset-4 decoration-[var(--border-color)] hover:decoration-[var(--text-primary)] transition-all inline-block w-max"
+                className="text-base text-[var(--text-primary)] transition-all inline-block w-max"
               >
-                View GitHub ↗
+                <span className="link-underline pb-0.5">View GitHub ↗</span>
               </a>
             </div>
           </AnimatedSection>

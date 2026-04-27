@@ -19,7 +19,7 @@ export default function Projects() {
             <AnimatedSection key={project.id}>
               <Link
                 href={project.route}
-                className="group flex flex-col sm:flex-row items-baseline gap-4 py-6 border-b border-[var(--border-color)] hover:bg-[var(--bg-elevated)] px-4 -mx-4 transition-colors duration-200"
+                className="group flex flex-col sm:flex-row items-baseline gap-4 py-6 border-b border-[var(--border-color)] hover:bg-[var(--bg-elevated)] px-4 -mx-4 transition-all duration-200 active:scale-[0.99]"
               >
                 <span className="text-sm font-mono text-[var(--text-secondary)] w-12 shrink-0">
                   {i + 1 < 10 ? `0${i + 1}` : i + 1}
