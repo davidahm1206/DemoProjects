@@ -107,3 +107,18 @@ body {
   transform-origin: bottom left;
 }
 
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+
